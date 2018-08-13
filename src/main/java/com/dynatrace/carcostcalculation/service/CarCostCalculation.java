@@ -29,7 +29,6 @@ public class CarCostCalculation {
 	public static final String SUNROOF = "sunroof";
 	public static final String NAVIGATION = "navigation";
 	public static final String TOW_PACKAGE = "towpackage";
-	public static final long waitTime = 1500;
 	Map<String, Map<String,Integer>> car = new HashMap<String, Map<String,Integer>>()
     {{
     	put("coupe",new HashMap<String,Integer>(){{
@@ -74,7 +73,7 @@ public class CarCostCalculation {
     @GET
     @Path("{carType}/{options}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getIt(@PathParam("carType") String carType,@PathParam("options") String options,long waitTime) throws Exception {
+    public String getCarCost(@PathParam("carType") String carType,@PathParam("options") String options) throws Exception {
     	double carCost = 0.0;
     	if(carType!= null){
     		String[] carOptions={};
@@ -100,7 +99,7 @@ public class CarCostCalculation {
             }
             double tax = 0;
             //looping two times
-            tax = slowTaxCalculationMethod(waitTime);
+            tax = slowTaxCalculationMethod();
             String[] gasGuzzlers = { "truck", "suv" };
             for (String gasGuzzler : gasGuzzlers) {
                 if (gasGuzzler.equals(carType)) {
@@ -117,10 +116,10 @@ public class CarCostCalculation {
     	return "The car value of "+carType+" is "+carCost; 
     }
     
-    private static double slowTaxCalculationMethod(long waitTime) {
+    private static double slowTaxCalculationMethod() {
         // the Thread.sleep cannot be removed
         try {
-            Thread.sleep(waitTime);
+            Thread.sleep(1500);
         } catch (Exception e) {
             // Do nothing
         }
