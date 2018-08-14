@@ -2,12 +2,15 @@ package com.dynatrace.carcostcalculation.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import org.apache.log4j.Logger;
 
 /**
  * Root resource (exposed at "" path)
@@ -29,6 +32,7 @@ public class CarCostCalculation {
 	public static final String SUNROOF = "sunroof";
 	public static final String NAVIGATION = "navigation";
 	public static final String TOW_PACKAGE = "towpackage";
+	private static Logger logger = Logger.getLogger(CarCostCalculation.class);
 	Map<String, Map<String,Integer>> car = new HashMap<String, Map<String,Integer>>()
     {{
     	put("coupe",new HashMap<String,Integer>(){{
@@ -70,15 +74,17 @@ public class CarCostCalculation {
     		put(TOW_PACKAGE,500);
     	}});
     }};
+    
+    
     @GET
     @Path("{carType}/{options}")
     @Produces(MediaType.TEXT_PLAIN)
     public String getCarCost(@PathParam("carType") String carType,@PathParam("options") String options) throws Exception {
     	double carCost = 0.0;
-    	if(carType!= null){
     		String[] carOptions={};
     	if(options!=null){
     	 carOptions = options.split(",");
+    	 logger.info("User selected of car type "+carType+"with"+carOptions);
     	}
         
         if(car.containsKey(carType)){
@@ -87,7 +93,9 @@ public class CarCostCalculation {
         	if(car.get(carType).containsKey(option)){
         		carCost += car.get(carType).get(option);
         	}else{
-        		return carType+" doesn't support the options you selected please select options from these "+car.get(carType).keySet();
+        		Set<String> allowedCarTypes = car.get(carType).keySet();
+        		logger.error(carType+" doesn't support the options you selected please select options from these "+allowedCarTypes);
+        		return carType+" doesn't support the options you selected please select options from these "+allowedCarTypes;
         	}
         	}
         	if (carCost > 30000 && carCost <= 60000) {
@@ -110,9 +118,9 @@ public class CarCostCalculation {
             }
             carCost += tax;
         }else{
+        	logger.error("The Car Type "+carType+" is not available please select car types from the following "+car.keySet());
         	return "The Car Type "+carType+" is not available please select car types from the following "+car.keySet();
         }
-    	}
     	return "The car value of "+carType+" is "+carCost; 
     }
     
