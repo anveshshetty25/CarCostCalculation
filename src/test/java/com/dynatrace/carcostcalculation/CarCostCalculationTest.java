@@ -11,6 +11,7 @@ import com.dynatrace.carcostcalculation.service.CarCostCalculation;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 public class CarCostCalculationTest extends JerseyTest {
 
     @Override
