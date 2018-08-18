@@ -11,7 +11,7 @@ import com.dynatrace.carcostcalculation.service.CarCostCalculation;
 
 import static org.junit.Assert.assertEquals;
 
-@Ignore
+
 public class CarCostCalculationTest extends JerseyTest {
 
     @Override
@@ -62,6 +62,6 @@ public class CarCostCalculationTest extends JerseyTest {
     @Test
     public void testGetCarCostIncorrectOption() throws Exception {
         final String responseMsg = target().path("coupe/v8,automatic,navigation,sunroof,premiumaudio,towpackage").request().get(String.class);
-        assertEquals("coupe doesn't support the options you selected please select options from these [premiumaudio, v8, navigation, cost, sunroof, automatic]", responseMsg);
+        assertEquals("coupe doesn't support the options you selected please select options from these [premiumaudio, v8, navigation, sunroof, automatic]", responseMsg);
     }
 }

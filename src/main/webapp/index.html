@@ -24,14 +24,18 @@
       	
       	/* we join the array separated by the comma */
       	var selected;
+      	if(chkArray.length!=0){
       	selected = chkArray.join(',') ;
+      	}else{
+      		chkArray.push("default");
+      	}
       	
       	/* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
       	if(carType != ""){
       		
       		//alert("You have selected " + selected+carType);	
-      console.log(window.location.protocol+"//"+window.location.host+"/carcostcalculation/cars/"+carType+"/"+selected);
-      		$.get(window.location.protocol+"//"+window.location.host+"/carcostcalculation/cars/"+carType+"/"+selected, function(data, status){
+      console.log(window.location.protocol+"//"+window.location.host+"/carcostcalculation/car/"+carType+"/"+selected);
+      		$.get(window.location.protocol+"//"+window.location.host+"/carcostcalculation/car/"+carType+"/"+selected, function(data, status){
     			
             document.getElementById("output").innerHTML = data;
         });

@@ -36,16 +36,16 @@ public class CarCostCalculation {
 	private static final String TRUCK = "truck";
 	private static final String SUV="suv";
 	private static final String LUXARY_SEDAN = "luxary_sedan";
-	
+	private static final String[] gasGuzzlers = { "truck", "suv" };
 	private static Logger logger = Logger.getLogger(CarCostCalculation.class);
-	private static final Map<String,Integer> carlookup = new HashMap<String,Integer>()
+	private static final Map<String,Integer> carslookup = new HashMap<String,Integer>()
 	{{
 		put(COUPE,15000);
 		put(TRUCK,25000);
 		put(SUV,30000);
 		put(LUXARY_SEDAN,35000);
 	}};
- 	private static final Map<String, Map<String,Integer>> OptionLookup = new HashMap<String, Map<String,Integer>>()
+ 	private static final Map<String, Map<String,Integer>> OptionsLookup = new HashMap<String, Map<String,Integer>>()
     {{
     	put(COUPE,new HashMap<String,Integer>(){{
     		put(ENGINE_TYPE,5000);
@@ -85,23 +85,23 @@ public class CarCostCalculation {
     
     
     @GET
-    @Path("{carType}{options:(/options/[^/]+?)?}")
+    @Path("{carType}/{options}")
     @Produces(MediaType.TEXT_PLAIN)
     public String getCarCost(@PathParam("carType") String carType,@PathParam("options") String options) throws Exception {
     	double carCost = 0.0;
     		String[] carOptions={};
-    	if(options!=null){
+    	if(options!="default"){
     	 carOptions = options.split(",");
     	 logger.info("User selected of car type "+carType+"with"+carOptions);
     	}
         
-        if(carlookup.containsKey(carType)){
-        	carCost += carlookup.get(carType);
+        if(carslookup.containsKey(carType)){
+        	carCost += carslookup.get(carType);
         	for(String option:carOptions){
-        	if(OptionLookup.get(carType).containsKey(option)){
-        		carCost += OptionLookup.get(carType).get(option);
+        	if(OptionsLookup.get(carType).containsKey(option)){
+        		carCost += OptionsLookup.get(carType).get(option);
         	}else if(option.length()!=0){
-        		Set<String> allowedCarTypes = OptionLookup.get(carType).keySet();
+        		Set<String> allowedCarTypes = OptionsLookup.get(carType).keySet();
         		logger.error(carType+" doesn't support the options you selected please select options from these "+allowedCarTypes);
         		return carType+" doesn't support the options you selected please select options from these "+allowedCarTypes;
         	}
@@ -116,7 +116,6 @@ public class CarCostCalculation {
             double tax = 0;
             //looping two times
             tax = slowTaxCalculationMethod();
-            String[] gasGuzzlers = { "truck", "suv" };
             for (String gasGuzzler : gasGuzzlers) {
                 if (gasGuzzler.equals(carType)) {
                     // adding gas guzzler tax
@@ -126,8 +125,8 @@ public class CarCostCalculation {
             }
             carCost += tax;
         }else{
-        	logger.error("The Car Type "+carType+" is not available please select car types from the following "+carlookup.keySet());
-        	return "The Car Type "+carType+" is not available please select car types from the following "+carlookup.keySet();
+        	logger.error("The Car Type "+carType+" is not available please select car types from the following "+carslookup.keySet());
+        	return "The Car Type "+carType+" is not available please select car types from the following "+carslookup.keySet();
         }
     	return "The car value of "+carType+" is "+carCost; 
     }
