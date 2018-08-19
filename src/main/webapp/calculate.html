@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <style>
+        .material-switch > input[type="checkbox"] {
+         display: none;   
+         }
+         .material-switch > label {
+         cursor: pointer;
+         height: 0px;
+         position: relative; 
+         width: 40px;  
+         }
+         .material-switch > label::before {
+         background: rgb(0, 0, 0);
+         box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+         border-radius: 8px;
+         content: '';
+         height: 16px;
+         margin-top: -8px;
+         position:absolute;
+         opacity: 0.3;
+         transition: all 0.4s ease-in-out;
+         width: 40px;
+         }
+         .material-switch > label::after {
+         background: rgb(255, 255, 255);
+         border-radius: 16px;
+         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+         content: '';
+         height: 24px;
+         left: -4px;
+         margin-top: -8px;
+         position: absolute;
+         top: -4px;
+         transition: all 0.3s ease-in-out;
+         width: 24px;
+         }
+         .material-switch > input[type="checkbox"]:checked + label::before {
+         background: inherit;
+         opacity: 0.5;
+         }
+         .material-switch > input[type="checkbox"]:checked + label::after {
+         background: inherit;
+         left: 20px;
+         }
+         body {
+         background: white;
+         }
+         input:focus, 
+         textarea:focus {
+         outline: none;
+         }
+         p {
+         max-height: 60px;
+         }
+         h1 {
+         color: #ccc;
+         font-size: 1.4em;
+         font-weight: 700;
+         margin: 0;
+         text-align:center;
+         }
+         .calc {
+         background: #fff;
+         border-radius: 6px;
+         box-shadow: 15px 15px 0px rgba(0,0,0,.1);
+         margin: 50px auto;
+         padding: 20px;
+         padding-top: 30px;
+         width: 300px;
+         .header {
+         background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/95581/rx7-Spectrum-Photography.jpg');
+         background-position: 106% 89%;
+         background-size: 101%;
+         border-bottom: 2px solid #f26964;
+         border-top-left-radius: 6px;
+         border-top-right-radius: 6px;
+         bottom: 30px;
+         height: 102px;
+         position: relative;
+         right: 20px;
+         width: 340px;
+         }
+         input {
+         background: #f5f5f5;
+         border: 0;
+         border: 1px solid #eee;
+         border-radius: 6px;
+         max-width: 215px;
+         padding: 20px;
+         padding-left: 65px;
+         margin-bottom: 10px;
+         width: 100%;
+         }
+         .btn {
+         background: #f26964;
+         border: 0;
+         border-radius: 6px;
+         box-shadow: 0px 3px 0px #c1524e;
+         color: #fff;
+         font-size: 1.2em;
+         padding: 20px;
+         position: relative;
+         text-shadow: 1px 1px 0px rgba(0,0,0,.1);
+         width: 100%;
+         &:active {
+         box-shadow:none;
+         top:3px;
+         }
+         }
+         #output {
+         border-radius: 6px;
+         color: #919191;
+         font-size: 28px;
+         font-weight: bold;
+         height: 34px;
+         margin: 0 auto;
+         padding: 11px;
+         text-align: center;
+         vertical-align: middle;
+         visibility: visible;
+         }
+         }
+         .fa {
+         background-color: #f26964;
+         border-bottom-left-radius: 6px;
+         border-top-left-radius: 6px;
+         height: 18px;
+         bottom: 68px;
+         color: white;
+         padding: 20px;
+         position: relative;
+         width: 12px;
+         }
+         .fa-usd {
+         &:before {
+         bottom: 1px;
+         font-size: 18px;
+         left: 2px;
+         position: relative;
+         }
+         }
+         .interest {
+         &:before {
+         content: "%";
+         font-weight: bold;    
+         }
+         }
+         .myForm{
+         font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+         font-size: 0.8em;
+         width: 45em;
+         padding: 1em;
+         border: 1px solid #ccc;
+         background-color:#F4F6F7;
+         }
+         #calculator{
+         display: flex;
+         flex-direction: row;
+         justify-content: flex-start;
+         margin: 2em 0;
+         }
+         #right{
+         display: flex;
+         flex-direction: column;
+         font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+         font-size: 0.8em;
+         width: 45em;
+         padding: 1em;
+         border: 1px solid #ccc;
+         }
+         .myForm * {
+         box-sizing: border-box;
+         }
+         .myForm fieldset {
+         border: none;
+         padding: 0;
+         }
+         .myForm legend,
+         .myForm label {
+         padding: 0;
+         font-weight: bold;
+         color: darkslateblue;
+         }
+         .myForm label.choice {
+         font-size: 1.2em;
+         font-weight: normal;
+         }
+         .myForm label {
+         text-align: left;
+         display: block;
+         }
+         .myForm select {
+         float: right;
+         width: 60%;
+         border: 1px solid #ccc;
+         font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+         font-size: 0.9em;
+         padding: 0.3em;
+         }
+         .myForm button {
+         padding: 1em;
+         border-radius: 0.5em;
+         border: none;
+         font-weight: bold;
+         margin-left: 40%;
+         margin-top: 1.8em;
+         }
+         .myForm button:hover {
+         background: #ccc;
+         cursor: pointer;
+         }
+         .monthly-payment{
+         text-align: center;
+         color: darkslateblue;
+         }
+         .car-carousel{
+         display: flex;
+         flex-direction: row;
+         }
+         .form-class{
+         display: flex;
+         justify-content: row;
+         border: 2px solid;
+         }
+        
+         .dropdown-class{
+           margin-left: -252px;
+    margin-top: 50px;
+         }
+         .cal-btn{
+           text-align: center
+         }
+         .header, .subheading{
+               text-align: left
+         }
+         .heading{
+               margin-top: 50px;
+         }
+         </style>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+         <script>
+               	/* Get the checkboxes values based on the class attached to each check box */
+             	 $( document ).ready(function() {
+               	$("#buttonClass").click(function() {
+               		console.log('here');
+               	    getValueUsingClass();
+               	    
+               	});
+             	 });
+               function getValueUsingClass(){
+               	/* declare an checkbox array */
+               	var chkArray = [];
+               	  var carType =  $('.selectpicker option:selected').val();
+               	/* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+               	$(".chk:checked").each(function() {
+               		chkArray.push($(this).val());
+               	});
+               	
+               	/* we join the array separated by the comma */
+               	var selected;
+               	if(chkArray.length!=0){
+               	selected = chkArray.join(',') ;
+               	}else{
+               		selected="default";
+               	}
+               	console.log('before url');
+               	var rootUrl="";
+               	if(window.location.host==="localhost:8080"){
+               		rootUrl=window.location.protocol+"//"+window.location.host+"/carcostcalculation";
+               	}else{
+               		rootUrl=window.location.protocol+"//"+window.location.host;
+               	}
+               	/* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+               	if(carType != ""){
+               		
+               		//alert("You have selected " + selected+carType);	
+               console.log(rootUrl+"/car/"+carType+"/"+selected);
+               		$.get(rootUrl+"/car/"+carType+"/"+selected, function(data, status){
+             			
+                     document.getElementById("output").innerHTML = data;
+                 });
+               	}else{
+               		alert("Please select the car type");	
+               	}
+               }        
+
+         </script>
+      <body>
+            <div class="container heading">
+             <h1 class="header"> Loan Calculator </h1>
+<h4 class="subheading"> This loan calculator will help you determine the monthly payments on a loan. Simply enter the loan amount, <br>
+term and interest rate in the fields below and click calculate. This calculator can be used for mortgage, auto, or  <br>
+any other fixed loan types. </h4>
+
+            <div id="calculator">
+
+            <div class="form-class">
+               <div class="myForm">
+                  <p>
+                     <label>
+                        Choose Car Type
+                        <select class="selectpicker" value="select">
+                           <option value="" selected disabled hidden>Choose Car Type</option>
+                           <optgroup label="Standard">
+                              <option value="coupe">coupe</option>
+                           </optgroup>
+                           <optgroup label="SUV">
+                              <option value="suv">suv</option>
+                           </optgroup>
+                           <optgroup label="Pick up">
+                              <option value="truck">truck</option>
+                           </optgroup>
+                           <optgroup label="Economy">
+                              <option value="luxary_sedan">Luxary_sedan</option>
+                           </optgroup>
+                        </select>
+                     </label>
+                  </p>
+                     <div class="dropdown-class">
+                        <div class="row">
+                           <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+                              <div class="panel panel-default">
+                                 <!-- Default panel contents -->
+                                 <div class="panel-heading">please select options</div>
+                                 <!-- List group -->
+                                 <ul class="list-group">
+                                    <li class="list-group-item">
+                                       V8
+                                       <div class="material-switch pull-right">
+                                          <input id="someSwitchOptionDefault"  value="v8" class="chk" type="checkbox"/>
+                                          <label for="someSwitchOptionDefault" class="label-success"></label>
+                                       </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                       Automatic
+                                       <div class="material-switch pull-right">
+                                          <input id="someSwitchOptionPrimary"  value="automatic" class="chk" type="checkbox"/>
+                                          <label for="someSwitchOptionPrimary" class="label-success"></label>
+                                       </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                       Premiumaudio
+                                       <div class="material-switch pull-right">
+                                          <input id="someSwitchOptionSuccess"  value="premiumaudio"  class="chk" type="checkbox"/>
+                                          <label for="someSwitchOptionSuccess" class="label-success"></label>
+                                       </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                       Sunroof
+                                       <div class="material-switch pull-right">
+                                          <input id="someSwitchOptionInfo"  value="sunroof"  class="chk" type="checkbox"/>
+                                          <label for="someSwitchOptionInfo" class="label-success"></label>
+                                       </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                       Navigation
+                                       <div class="material-switch pull-right">
+                                          <input id="someSwitchOptionWarning"  value="navigation" class="chk" type="checkbox"/>
+                                          <label for="someSwitchOptionWarning" class="label-success"></label>
+                                       </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                       Towpackage
+                                       <div class="material-switch pull-right">
+                                          <input id="someSwitchOptionDanger" value="towpackage" class="chk" type="checkbox"/>
+                                          <label for="someSwitchOptionDanger" class="label-success"></label>
+                                       </div>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  <p><button class="btn-primary" id="buttonClass">Calculate</button></p>
+               </div>
+               <div id="right" class="column">
+                  <h4 class="monthly-payment" id="output"></h4>
+               </div>
+            </div>
+         </div>
+      </div>
+</body>
+</html>
