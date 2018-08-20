@@ -3,7 +3,7 @@ This application helps user to give the cost of a car for type Coupe,SUV,Truck a
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 ## Preqrequisites ##
-Install Java JDK7 on your local machine and an IDE of your choice (e.g., Eclipse, IntelliJ, JbossDeveloperStudio). To run the application download and install tomcat v7 server on your machine.
+Install Java JDK7 on your local machine and an IDE of your choice (e.g., Eclipse, IntelliJ, JbossDeveloperStudio). To run the application, download and install tomcat v7 server on your machine.
 ## Setup ###
 Copy the URL from github,Open Eclipse follow the steps, File->import->Git->project from git->URI and paste the copied URL, give your credentials then you can see the project in your eclipse.Now convert it into Maven project.Create a log file in your machine, copy the path and modify the log4j.properties file property(log4j.appender.file.File) with the path of your log file.  
 ## Build ##
