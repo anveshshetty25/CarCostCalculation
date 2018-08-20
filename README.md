@@ -1,5 +1,5 @@
 # Car Cost Calculation
-This applications helps user to give the cost of car for type Coupe,SUV,Truck and Luxary_sedan. User can add options like V8,Automatic,Premium Audio,SUnroof,Navigation and TowPackage
+This applications helps user to give the cost of car for type Coupe,SUV,Truck and Luxary_sedan. User can add options like V8,Automatic,Premium Audio,Sunroof,Navigation and TowPackage.
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 ## Preqrequisites ##
