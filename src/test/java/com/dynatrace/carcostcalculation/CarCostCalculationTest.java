@@ -64,4 +64,10 @@ public class CarCostCalculationTest extends JerseyTest {
         final String responseMsg = target().path("coupe/v8,automatic,navigation,sunroof,premiumaudio,towpackage").request().get(String.class);
         assertEquals("coupe doesn't support the options you selected please select options from these [premiumaudio, v8, navigation, sunroof, automatic]", responseMsg);
     }
+    
+    @Test
+    public void testGetCarCostWithdefaultOption() throws Exception {
+        final String responseMsg = target().path("coupe/default").request().get(String.class);
+        assertEquals("The car value of coupe is 15500.0", responseMsg);
+    }
 }

@@ -5,8 +5,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>Calculate Car Cost</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <style>
+      .subheading {
+font-family: Calibre-Regular,Arial,sans-serif;
+LINE-HEIGHT:20px;
+}
         .material-switch > input[type="checkbox"] {
          display: none;   
          }
@@ -74,19 +79,7 @@
          padding: 20px;
          padding-top: 30px;
          width: 300px;
-         .header {
-         background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/95581/rx7-Spectrum-Photography.jpg');
-         background-position: 106% 89%;
-         background-size: 101%;
-         border-bottom: 2px solid #f26964;
-         border-top-left-radius: 6px;
-         border-top-right-radius: 6px;
-         bottom: 30px;
-         height: 102px;
-         position: relative;
-         right: 20px;
-         width: 340px;
-         }
+         
          input {
          background: #f5f5f5;
          border: 0;
@@ -240,6 +233,14 @@
          .header, .subheading{
                text-align: left
          }
+         .header{
+         font-size: 40px;
+         text-transform: capitalize;
+         }
+         .subheading{
+         font-size: 16px;
+         font-family: Calibre-Regular,Arial,sans-serif;
+         }
          .heading{
                margin-top: 50px;
          }
@@ -247,10 +248,9 @@
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
          <script>
-               	/* Get the checkboxes values based on the class attached to each check box */
+               	/* Get the dropdown value and checkboxes values based on the class attached to each dropdown and check box */
              	 $( document ).ready(function() {
                	$("#buttonClass").click(function() {
-               		console.log('here');
                	    getValueUsingClass();
                	    
                	});
@@ -264,25 +264,24 @@
                		chkArray.push($(this).val());
                	});
                	
-               	/* we join the array separated by the comma */
+               	/* If user selcts the options ,we join the array separated by the comma or else we make the string to default*/
                	var selected;
                	if(chkArray.length!=0){
                	selected = chkArray.join(',') ;
                	}else{
                		selected="default";
                	}
-               	console.log('before url');
                	var rootUrl="";
+               	//intializing the rootUrl based on the host
                	if(window.location.host==="localhost:8080"){
                		rootUrl=window.location.protocol+"//"+window.location.host+"/carcostcalculation";
                	}else{
                		rootUrl=window.location.protocol+"//"+window.location.host;
                	}
-               	/* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+               	/* check if user select the carType or else give an alert message*/
                	if(carType != ""){
                		
                		//alert("You have selected " + selected+carType);	
-               console.log(rootUrl+"/car/"+carType+"/"+selected);
                		$.get(rootUrl+"/car/"+carType+"/"+selected, function(data, status){
              			
                      document.getElementById("output").innerHTML = data;
@@ -296,8 +295,9 @@
       <body>
             <div class="container heading">
              <h1 class="header"> Car Cost Calculator </h1>
-<h4 class="subheading"> This Car Cost calculator will help you determine the car cost of different types. Simply choose cartype and options which you want click calculate. 
- This calculator can be used for coupe,suv,truck and luxary sedan with various options </h4>
+             <br>
+             <br>
+<h4 class="subheading"> This Car Cost calculator will help you determine the car cost of different types.Simply choose cartype and options which you  want click calculate.<br>This calculator can be used for coupe,suv,truck and luxary sedan with various options.</h4>
 
             <div id="calculator">
 

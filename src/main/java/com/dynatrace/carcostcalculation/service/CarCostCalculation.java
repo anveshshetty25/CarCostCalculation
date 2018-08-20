@@ -14,6 +14,8 @@ import org.apache.log4j.Logger;
 
 /**
  * Root resource (exposed at "" path)
+ * 
+ * @author Anwesh.Valleshetti
  */
 @Path("")
 public class CarCostCalculation {
@@ -31,6 +33,7 @@ public class CarCostCalculation {
 	private static final String LUXARY_SEDAN = "luxary_sedan";
 	private static final String[] gasGuzzlers = { "truck", "suv" };
 	private static Logger logger = Logger.getLogger(CarCostCalculation.class);
+	//static lookup for cartypes and their price 
 	private static final Map<String,Integer> carslookup = new HashMap<String,Integer>()
 	{{
 		put(COUPE,15000);
@@ -38,6 +41,7 @@ public class CarCostCalculation {
 		put(SUV,30000);
 		put(LUXARY_SEDAN,35000);
 	}};
+	//static lookup for options and their price
 	private static final Map<String, Map<String,Integer>> OptionsLookup = new HashMap<String, Map<String,Integer>>()
 	{{
 		put(COUPE,new HashMap<String,Integer>(){{
@@ -77,10 +81,12 @@ public class CarCostCalculation {
 	}};
 
 	/**
-	 * Method handling HTTP GET requests. The returned object will be sent
-	 * to the client as "text/plain" media type.
+	 * Method processes the car cost based on user selected carType and options.
+	 *  Returns output to the client as "text/plain" media type.
 	 *
-	 * @return String that will be returned as a text/plain response.
+	 * @param carType-type{@link String}
+	 * @param carType-type{@link String}
+	 * @return carCost-The car cost value for user selected carType and options.
 	 * @throws Exception 
 	 */
 	@GET
@@ -116,7 +122,6 @@ public class CarCostCalculation {
 				carCost += 1000;
 			}
 			double tax = 0;
-			//looping two times
 			tax = slowTaxCalculationMethod();
 			for (String gasGuzzler : gasGuzzlers) {
 				if (gasGuzzler.equals(carType)) {
