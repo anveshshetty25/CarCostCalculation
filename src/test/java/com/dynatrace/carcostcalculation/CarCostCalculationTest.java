@@ -56,13 +56,13 @@ public class CarCostCalculationTest extends JerseyTest {
     @Test
     public void testGetCarCostIncorrectCar() throws Exception {
         final String responseMsg = target().path("luxary/v8,automatic,navigation,sunroof,premiumaudio,towpackage").request().get(String.class);
-        assertEquals("The Car Type luxary is not available please select car types from the following [luxary_sedan, suv, truck, coupe]", responseMsg);
+        assertEquals("The Car Type luxary is not available please select car types from the following [coupe, truck, suv, luxary_sedan]", responseMsg);
     }
     
     @Test
     public void testGetCarCostIncorrectOption() throws Exception {
         final String responseMsg = target().path("coupe/v8,automatic,navigation,sunroof,premiumaudio,towpackage").request().get(String.class);
-        assertEquals("coupe doesn't support the options you selected please select options from these [premiumaudio, v8, navigation, sunroof, automatic]", responseMsg);
+        assertEquals("coupe doesn't support towpackage, please select options from these [premiumaudio, v8, navigation, sunroof, automatic]", responseMsg);
     }
     
     @Test

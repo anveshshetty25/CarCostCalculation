@@ -1,9 +1,9 @@
 package com.dynatrace.carcostcalculation.service;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -34,7 +34,7 @@ public class CarCostCalculation {
 	private static final String[] gasGuzzlers = { "truck", "suv" };
 	private static Logger logger = Logger.getLogger(CarCostCalculation.class);
 	//static lookup for cartypes and their price 
-	private static final Map<String,Integer> carslookup = new HashMap<String,Integer>()
+	private static final LinkedHashMap<String,Integer> carslookup = new LinkedHashMap<String,Integer>()
 	{{
 		put(COUPE,15000);
 		put(TRUCK,25000);
@@ -98,7 +98,7 @@ public class CarCostCalculation {
 		//If user doesn't select any options then the value will be default and carOptions array is empty
 		if(!options.equals("default")){
 			carOptions = options.split(",");
-			logger.info("User selected of car type "+carType+"with"+carOptions);
+			logger.info("User selected of car type "+carType+" with options "+options);
 		}
 
 		//checks the car type and options selected by user and adds the respective cost
@@ -109,8 +109,8 @@ public class CarCostCalculation {
 					carCost += OptionsLookup.get(carType).get(option);
 				}else {
 					Set<String> allowedCarTypes = OptionsLookup.get(carType).keySet();
-					logger.error(carType+" doesn't support the "+option+" you selected please select options from these "+allowedCarTypes);
-					return carType+" doesn't support the "+option+" you selected please select options from these "+allowedCarTypes;
+					logger.error(carType+" doesn't support "+option+", please select options from these "+allowedCarTypes);
+					return carType+" doesn't support "+option+", please select options from these "+allowedCarTypes;
 				}
 			}
 			logger.debug("The car value before adding tax"+carCost);
