@@ -109,8 +109,8 @@ public class CarCostCalculation {
 					carCost += OptionsLookup.get(carType).get(option);
 				}else {
 					Set<String> allowedCarTypes = OptionsLookup.get(carType).keySet();
-					logger.error(carType+" doesn't support the options you selected please select options from these "+allowedCarTypes);
-					return carType+" doesn't support the options you selected please select options from these "+allowedCarTypes;
+					logger.error(carType+" doesn't support the "+option+" you selected please select options from these "+allowedCarTypes);
+					return carType+" doesn't support the "+option+" you selected please select options from these "+allowedCarTypes;
 				}
 			}
 			logger.debug("The car value before adding tax"+carCost);
