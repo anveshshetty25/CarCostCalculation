@@ -21,19 +21,19 @@ import jersey.repackaged.com.google.common.collect.ImmutableMap;
 @Path("")
 public class CarCostCalculation {
 
-	public static final String CAR_COST = "cost";
-	public static final String ENGINE_TYPE = "v8";
-	public static final String TRANSMISSION_TYPE = "automatic";
-	public static final String MUSIC_TYPE = "premiumaudio";
-	public static final String SUNROOF = "sunroof";
-	public static final String NAVIGATION = "navigation";
-	public static final String TOW_PACKAGE = "towpackage";
+	private static final String ENGINE_TYPE = "v8";
+	private static final String TRANSMISSION_TYPE = "automatic";
+	private static final String MUSIC_TYPE = "premiumaudio";
+	private static final String SUNROOF = "sunroof";
+	private static final String NAVIGATION = "navigation";
+	private static final String TOW_PACKAGE = "towpackage";
 	private static final String COUPE = "coupe";
 	private static final String TRUCK = "truck";
 	private static final String SUV="suv";
 	private static final String LUXARY_SEDAN = "luxary_sedan";
 	private static final String[] gasGuzzlers = {TRUCK,SUV};
 	private static Logger logger = Logger.getLogger(CarCostCalculation.class);
+	
 	//static lookup for cartypes and their price 
 	private static final Map<String,Integer> CARS_LOOKUP = ImmutableMap.of(
 			COUPE,15000,
@@ -41,52 +41,11 @@ public class CarCostCalculation {
 			SUV,30000,
 			LUXARY_SEDAN,35000
 			);
+	
 	//static lookup for options and their price 
 	private static final Map<String, Map<String, Integer>> OPTIONS_LOOKUP = createOptionsLookup();
 
-	//Method to instantiate map
-	@SuppressWarnings("serial")
-	private static Map<String, Map<String, Integer>> createOptionsLookup() {
-		Map<String,Map<String,Integer>> optionPrices = new HashMap<>();
-		optionPrices.put(COUPE,new HashMap<String,Integer>(){
-			{
-				put(ENGINE_TYPE,5000);
-				put(TRANSMISSION_TYPE,1000);
-				put(MUSIC_TYPE,1000);
-				put(SUNROOF,1000);
-				put(NAVIGATION,1000);
-
-			}});
-		optionPrices.put(TRUCK,new HashMap<String,Integer>(){
-			{
-				put(ENGINE_TYPE,6000);
-				put(TRANSMISSION_TYPE,1500);
-				put(MUSIC_TYPE,1100);
-				put(SUNROOF,1000);
-				put(NAVIGATION,1000);
-				put(TOW_PACKAGE,550);
-
-			}});
-		optionPrices.put(SUV,new HashMap<String,Integer>(){
-			{
-				put(ENGINE_TYPE,5500);
-				put(TRANSMISSION_TYPE,1200);
-				put(MUSIC_TYPE,1500);
-				put(SUNROOF,1000);
-				put(NAVIGATION,1000);
-				put(TOW_PACKAGE,500);
-			}});
-		optionPrices.put(LUXARY_SEDAN,new HashMap<String,Integer>(){
-			{
-				put(ENGINE_TYPE,25000);
-				put(TRANSMISSION_TYPE,1200);
-				put(MUSIC_TYPE,1500);
-				put(SUNROOF,1000);
-				put(NAVIGATION,1000);
-				put(TOW_PACKAGE,500);
-			}});
-		return Collections.unmodifiableMap(optionPrices);
-	}
+	
 	/**
 	 * Method processes the car cost based on user selected carType and options.
 	 *  Returns output to the client as "text/plain" media type.
@@ -157,6 +116,48 @@ public class CarCostCalculation {
 		return 500;
 	}
 
+	//Method to instantiate map
+		@SuppressWarnings("serial")
+		private static Map<String, Map<String, Integer>> createOptionsLookup() {
+			Map<String,Map<String,Integer>> optionPrices = new HashMap<>();
+			optionPrices.put(COUPE,new HashMap<String,Integer>(){
+				{
+					put(ENGINE_TYPE,5000);
+					put(TRANSMISSION_TYPE,1000);
+					put(MUSIC_TYPE,1000);
+					put(SUNROOF,1000);
+					put(NAVIGATION,1000);
 
+				}});
+			optionPrices.put(TRUCK,new HashMap<String,Integer>(){
+				{
+					put(ENGINE_TYPE,6000);
+					put(TRANSMISSION_TYPE,1500);
+					put(MUSIC_TYPE,1100);
+					put(SUNROOF,1000);
+					put(NAVIGATION,1000);
+					put(TOW_PACKAGE,550);
+
+				}});
+			optionPrices.put(SUV,new HashMap<String,Integer>(){
+				{
+					put(ENGINE_TYPE,5500);
+					put(TRANSMISSION_TYPE,1200);
+					put(MUSIC_TYPE,1500);
+					put(SUNROOF,1000);
+					put(NAVIGATION,1000);
+					put(TOW_PACKAGE,500);
+				}});
+			optionPrices.put(LUXARY_SEDAN,new HashMap<String,Integer>(){
+				{
+					put(ENGINE_TYPE,25000);
+					put(TRANSMISSION_TYPE,1200);
+					put(MUSIC_TYPE,1500);
+					put(SUNROOF,1000);
+					put(NAVIGATION,1000);
+					put(TOW_PACKAGE,500);
+				}});
+			return Collections.unmodifiableMap(optionPrices);
+		}
 
 }
